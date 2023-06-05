@@ -1,0 +1,46 @@
+﻿<Window x:Class="CourseProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseProject" 
+        xmlns:models="clr-namespace:CourseProject.Models" xmlns:viewmodels="clr-namespace:CourseProject.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:ApplicationViewModel}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1200">
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid ShowGridLines="True" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <ListBox Grid.Row="0" SelectionChanged="CurrentFiles_SelectionChanged" x:Name="Files" 
+                         ItemsSource="{Binding Path=WorkFolder.Files}" 
+                         SelectedItem="{Binding WorkFolder.SelectedFile}" BorderBrush="#FF7EE350"
+                         >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Height="20" Text="{Binding Path=Name}" 
+                                       Foreground="#1e3163" FontFamily="Arial Rounded MT Bold" FontSize="16"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button FontSize="18" Grid.Row="1" Click="btnOpenFolder_Click">Выбрать рабочую папку</Button>
+        </Grid>
+
+        <TabControl Grid.Column="1">
+            <TabItem Name="ContentPage" Header="Содержимое">
+                <TextBox Name="CurrentFileContent" 
+                         DataContext="{Binding Path=WorkFolder}"
+                         Text="{Binding Path=SelectedFileContent, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+            </TabItem>
+
+            <TabItem Header="Вкладка 2">Вторая вкладка</TabItem>
+        </TabControl>
+    </Grid>
+</Window>
